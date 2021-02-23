@@ -14,6 +14,9 @@ public class JwtExceptionTest {
         assertExceptionMessage(JwtExceptionType.TOO_MANY_SEGMENTS);
         assertExceptionMessage(JwtExceptionType.INVALID_ALGORITHM);
         assertExceptionMessage(JwtExceptionType.FAILED_TO_ENCODE_HEADER);
+        assertExceptionMessage(JwtExceptionType.FAILED_TO_DECODE_HEADER);
+        assertExceptionMessage(JwtExceptionType.INVALID_SIGNATURE);
+        assertExceptionMessage(JwtExceptionType.FAILED_TO_PARSE_HEADER);
     }
 
     private void assertExceptionMessage(JwtExceptionType type) {

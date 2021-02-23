@@ -1,11 +1,11 @@
 package com.thiefspin.jwt;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JwtHeaderTest {
 
@@ -36,5 +36,15 @@ public class JwtHeaderTest {
         } else {
             fail("JwtHeader could not be parsed as JSON");
         }
+    }
+
+    @Test
+    @DisplayName("should deserialize from json")
+    void testJsonDeserialization() throws JwtException {
+        final var json = "{\"alg\":\"HS256\",\"extraHeader\":null,\"type\":\"JWT\"}";
+        final var header = JwtHeader.fromJson(json);
+        assertNull(header.getExtraHeader());
+        assertEquals(header.getAlg(), Algorithm.HS256);
+        assertEquals(header.getType(), "JWT");
     }
 }

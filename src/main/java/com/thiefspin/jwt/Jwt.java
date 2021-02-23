@@ -4,34 +4,30 @@ import java.util.Optional;
 
 public class Jwt {
 
-    static JwtResult encode(String secret, String payload) {
+    public static JwtEncodeResult encode(String secret, String payload) {
         return encode(secret, payload, Optional.empty(), Optional.empty());
     }
 
-    static JwtResult encode(String secret, String payload, String header) {
+    public static JwtEncodeResult encode(String secret, String payload, String header) {
         return encode(secret, payload, Optional.of(header), Optional.empty());
     }
 
-    static JwtResult encode(String secret, String payload, Algorithm algorithm) {
+    public static JwtEncodeResult encode(String secret, String payload, Algorithm algorithm) {
         return encode(secret, payload, Optional.empty(), Optional.of(algorithm));
     }
 
-    static JwtResult encode(String secret, String payload, Optional<String> header, Optional<Algorithm> algorithm) {
+    public static JwtEncodeResult encode(String secret, String payload, Optional<String> header, Optional<Algorithm> algorithm) {
         final var alg = algorithm.orElse(Algorithm.HS256);
 
-        return encodeHeader(alg, header).map(encodedHeader -> signToken(encodedHeader, payload, secret, alg))
-            .orElse(new JwtResult(new JwtException(JwtExceptionType.FAILED_TO_ENCODE_HEADER)));
+        return encodeHeader(alg, header)
+            .map(encodedHeader -> JwtEncoder.signToken(encodedHeader, payload, secret, alg))
+            .orElse(new JwtEncodeResult(new JwtException(JwtExceptionType.FAILED_TO_ENCODE_HEADER)));
     }
 
-    private static JwtResult signToken(String encodedHeader, String payload, String secret, Algorithm algorithm) {
-        var encodedPayload = JwtEncoder.encodeBase64(payload);
-        try {
-            var signature = JwtEncoder.signHmac(encodedHeader + encodedPayload, secret, algorithm);
-            return new JwtResult(String.format("%s.%s.%s", encodedHeader, encodedPayload, signature));
-        } catch (JwtException e) {
-            return new JwtResult(e);
-        }
-    }
+//    public static JwtDecodeResult decode(String token, String secret) {
+//        if (token.isBlank()) return new JwtDecodeResult(new JwtException(JwtExceptionType.NOT_ENOUGH_SEGMENTS));
+//
+//    }
 
     protected static Optional<String> encodeHeader(Algorithm algorithm, Optional<String> extraHeader) {
         return getHeaderJson(algorithm, extraHeader)

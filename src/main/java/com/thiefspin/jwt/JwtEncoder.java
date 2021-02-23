@@ -24,4 +24,14 @@ class JwtEncoder {
         return Base64.encodeBase64URLSafeString(s.getBytes(StandardCharsets.UTF_8));
     }
 
+    static JwtEncodeResult signToken(String encodedHeader, String payload, String secret, Algorithm algorithm) {
+        var encodedPayload = JwtEncoder.encodeBase64(payload);
+        try {
+            var signature = JwtEncoder.signHmac(encodedHeader + encodedPayload, secret, algorithm);
+            return new JwtEncodeResult(String.format("%s.%s.%s", encodedHeader, encodedPayload, signature));
+        } catch (JwtException e) {
+            return new JwtEncodeResult(e);
+        }
+    }
+
 }

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 public class JwtTest {
@@ -80,7 +79,7 @@ public class JwtTest {
         testEncodedString(encoded, expectedHeaderPart, expectedPayloadPart);
     }
 
-    private void testEncodedString(JwtResult encoded, String expectedHeaderPart, String expectedPayloadPart) {
+    private void testEncodedString(JwtEncodeResult encoded, String expectedHeaderPart, String expectedPayloadPart) {
         if (encoded.getToken().isEmpty() || encoded.getException().isPresent()) {
             fail("Failed to encode token");
         }

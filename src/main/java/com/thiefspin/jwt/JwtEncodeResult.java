@@ -6,17 +6,17 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Getter
-public class JwtResult {
+public class JwtEncodeResult {
 
     private final Optional<String> token;
     private final Optional<JwtException> exception;
 
-    JwtResult(String token) {
+    JwtEncodeResult(String token) {
         this.token = Optional.of(token);
         this.exception = Optional.empty();
     }
 
-    JwtResult(JwtException exception) {
+    JwtEncodeResult(JwtException exception) {
         this.token = Optional.empty();
         this.exception = Optional.of(exception);
     }
