@@ -12,28 +12,6 @@ public class JwtTest {
     private final String secret = "very-secret";
 
     @Test
-    @DisplayName("Encoding a header should work")
-    void testEncode() {
-        final var expectedHeader = "eyJhbGciOiJIUzI1NiIsImV4dHJhSGVhZGVyIjpudWxsLCJ0eXBlIjoiSldUIn0";
-        Jwt.encodeHeader(Algorithm.HS256, Optional.empty())
-            .ifPresentOrElse(
-                header -> assertEquals(expectedHeader, header),
-                () -> fail("Failed to encode Jwt header")
-            );
-    }
-
-    @Test
-    @DisplayName("Creating a JwtHeader as JSON should work")
-    void testHeaderCreation() {
-        final var headerJson = Jwt.getHeaderJson(Algorithm.HS256, Optional.empty());
-        if (headerJson.isPresent()) {
-            assertEquals(headerJson.get(), "{\"alg\":\"HS256\",\"extraHeader\":null,\"type\":\"JWT\"}");
-        } else {
-            fail("Could not parse JwtHeader as JSON");
-        }
-    }
-
-    @Test
     @DisplayName("Encode token with the minimal API")
     void testEncodeSimple() {
         final var payload = "This is a payload";
@@ -77,6 +55,36 @@ public class JwtTest {
         final var expectedPayloadPart = "VGhpcyBpcyBhIHBheWxvYWQ";
 
         testEncodedString(encoded, expectedHeaderPart, expectedPayloadPart);
+    }
+
+    @Test
+    @DisplayName("Decode a encoded token correctly")
+    void testDecodeValidToken() {
+        final var payload = "This is a payload";
+        final var encoded = Jwt.encode(secret, payload);
+        if (encoded.getToken().isPresent()) {
+            final var decoded = Jwt.decode(encoded.getToken().get(), secret);
+            if (decoded.getPayload().isPresent()) {
+                assertEquals(decoded.getPayload().get(), payload);
+            } else {
+                fail("Failed to decode token");
+            }
+        } else {
+            fail("Token encoding failed");
+        }
+    }
+
+    @Test
+    @DisplayName("Handle decoding an incorrect header token correctly")
+    void testDecodeInvalidTokenHeader() {
+        final var invalidToken = "firstpart.second.sjkncn";
+        final var decoded = Jwt.decode(invalidToken, secret);
+        if (decoded.getException().isPresent()) {
+            assertEquals(
+                JwtExceptionType.FAILED_TO_PARSE_HEADER.getMessage(),
+                decoded.getException().get().getMessage()
+            );
+        }
     }
 
     private void testEncodedString(JwtEncodeResult encoded, String expectedHeaderPart, String expectedPayloadPart) {

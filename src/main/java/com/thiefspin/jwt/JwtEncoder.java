@@ -7,6 +7,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 class JwtEncoder {
 
@@ -32,6 +33,19 @@ class JwtEncoder {
         } catch (JwtException e) {
             return new JwtEncodeResult(e);
         }
+    }
+
+    static Optional<String> encodeHeader(Algorithm algorithm, Optional<String> extraHeader) {
+        return getHeaderJson(algorithm, extraHeader)
+            .stream()
+            .map(JwtEncoder::encodeBase64)
+            .findFirst();
+    }
+
+    static Optional<String> getHeaderJson(Algorithm algorithm, Optional<String> extraHeader) {
+        return extraHeader
+            .map(header -> new JwtHeader(algorithm, header).toJson())
+            .orElse(new JwtHeader(algorithm).toJson());
     }
 
 }
