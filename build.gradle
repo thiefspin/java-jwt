@@ -23,10 +23,10 @@ publishing {
 }
 
 group 'com.thiefspin'
-version '0.1.0'
+version '0.2.0'
 
-sourceCompatibility = 15
-targetCompatibility = 15
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
     mavenCentral()
