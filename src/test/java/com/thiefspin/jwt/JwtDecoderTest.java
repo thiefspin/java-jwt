@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JwtDecoderTest {
+class JwtDecoderTest {
 
     private final static String KEY = "very-secret";
 
@@ -25,7 +25,7 @@ public class JwtDecoderTest {
         final var signature = "MO-_ve-_ve-_vV8lKxloyI9S77-9YTzvv71oHU87b--_ve-_vXjvv73vv71d77-977-977-977-9Cg";
         final var token = String.format("%s.%s.%s", headerPart, payloadPart, signature);
         final var parts = JwtDecoder.partitionToken(token);
-        assertEquals(parts.length, 3);
+        assertEquals(3, parts.length);
         assertEquals(headerPart, parts[0]);
         assertEquals(payloadPart, parts[1]);
 

@@ -3,7 +3,6 @@ package com.thiefspin.jwt;
 import lombok.Getter;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 @Getter
 public class JwtDecodeResult {

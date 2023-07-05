@@ -48,4 +48,6 @@ class JwtEncoder {
             .orElse(new JwtHeader(algorithm).toJson());
     }
 
+    private JwtEncoder() {}
+
 }

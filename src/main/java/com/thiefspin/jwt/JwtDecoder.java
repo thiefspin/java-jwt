@@ -33,4 +33,6 @@ public class JwtDecoder {
     protected static String decodeBase64(String s) {
         return new String(Base64.decodeBase64(s));
     }
+
+    private JwtDecoder() {}
 }

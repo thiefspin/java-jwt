@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JwtHeaderTest {
+class JwtHeaderTest {
 
     @Test
     @DisplayName("should create a JwtHeader successfully")
@@ -23,7 +23,7 @@ public class JwtHeaderTest {
         final var extraHeader = "Content-type: application/json";
         final var header = new JwtHeader(Algorithm.HS256, extraHeader);
         assertSame(extraHeader, header.getExtraHeader());
-        assertSame(header.getAlg(), Algorithm.HS256);
+        assertSame(Algorithm.HS256, header.getAlg());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class JwtHeaderTest {
         final var json = "{\"alg\":\"HS256\",\"extraHeader\":null,\"type\":\"JWT\"}";
         final var header = JwtHeader.fromJson(json);
         assertNull(header.getExtraHeader());
-        assertEquals(header.getAlg(), Algorithm.HS256);
-        assertEquals(header.getType(), "JWT");
+        assertEquals(Algorithm.HS256, header.getAlg());
+        assertEquals("JWT", header.getType());
     }
 }

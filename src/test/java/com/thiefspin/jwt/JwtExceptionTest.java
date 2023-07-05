@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class JwtExceptionTest {
+class JwtExceptionTest {
 
     @Test
     @DisplayName("throwing a JwtException should yield the correct message")

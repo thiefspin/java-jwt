@@ -23,7 +23,7 @@ publishing {
 }
 
 group 'com.thiefspin'
-version '0.2.1'
+version '0.2.2'
 
 sourceCompatibility = 11
 targetCompatibility = 11

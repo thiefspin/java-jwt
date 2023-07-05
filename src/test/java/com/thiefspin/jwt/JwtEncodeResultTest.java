@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JwtEncodeResultTest {
+class JwtEncodeResultTest {
 
     @Test
     @DisplayName("JwtResult should be created correctly with token as result")
