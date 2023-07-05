@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-public class JwtEncoderTest {
+class JwtEncoderTest {
 
     @Test
     @DisplayName("Encoding a header should work")
@@ -26,7 +26,7 @@ public class JwtEncoderTest {
     void testHeaderCreation() {
         final var headerJson = JwtEncoder.getHeaderJson(Algorithm.HS256, Optional.empty());
         if (headerJson.isPresent()) {
-            assertEquals(headerJson.get(), "{\"alg\":\"HS256\",\"extraHeader\":null,\"type\":\"JWT\"}");
+            assertEquals("{\"alg\":\"HS256\",\"extraHeader\":null,\"type\":\"JWT\"}", headerJson.get());
         } else {
             fail("Could not parse JwtHeader as JSON");
         }

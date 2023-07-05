@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-public class JwtTest {
+class JwtTest {
 
     private final String secret = "very-secret";
 

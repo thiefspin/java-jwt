@@ -81,4 +81,6 @@ public class Jwt {
         return JwtDecoder.decodeToken(token, secret);
     }
 
+    private Jwt() {}
+
 }
